@@ -1,45 +1,78 @@
 package Java;
 
-public class DoublyLinkedList <T> {
+public class DoublyLinkedList <T extends Comparable<T>> {
     Node head;
     Node tail;
 
     public DoublyLinkedList(){}
 
-    public DoublyLinkedList append(Album newAlbum) {
-        Node toAppend = new Node(newAlbum);
+    public Node append(Album album) {
+        Node toAppend = new Node(album);
         if(this.head == null){
             this.head = toAppend;
-            this.head.next = tail;
-            this.head.prev = null;
+            this.tail = toAppend;
         } else {
-            Node tempNode = this.head;
-            while(tempNode.next != null){
-                tempNode = tempNode.next;
-            }
-            tempNode.next = toAppend;
-            toAppend.next = tail;
+            toAppend.prev = tail;
+            tail.next = toAppend;
+            tail = tail.next;
         }
-        return this;
+        return toAppend;
     }
 
-    public DoublyLinkedList insert(int location, Album newAlbum) {
-        Node toInsert = new Node<>(newAlbum);
+    public Node insert(int location, Album album) throws IllegalArgumentException {
+        Node toInsert = new Node<>(album);
         if(this.head == null){
             this.head = toInsert;
-            if(location > 0) System.out.println("Inserting into an Empty List");
+            this.tail = toInsert;
+            if(location != 0) throw new IllegalArgumentException("Inserting into an Empty List");
         } else {
-            int loc = 1;
-            Node tempNode = this.head;
-            while((loc < (location-1)) && (tempNode.next!=null)) {
-                tempNode = tempNode.next;
-                loc++;
+            if(location==0){
+                toInsert.next = this.head;
+                this.head = toInsert;
+            } else {
+                int loc = 1;
+                Node tempNode = this.head;
+                while((loc < (location-1)) && (tempNode.next!=null)) {
+                    tempNode = tempNode.next;
+                    loc++;
+                }
+                if(tempNode.next == null){
+                    int length = this.getIndex(tempNode.album);
+                    try {
+                        if(location > length) throw new IllegalArgumentException("Location is out of bounds for current list");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Location is Out of Bounds");
+                    }
+                }
+                toInsert.next = tempNode.next;
+                tempNode.next = toInsert;
+                toInsert.prev = tempNode;
             }
-            toInsert.next = tempNode.next;
-            tempNode.next = toInsert;
-            toInsert.prev = tempNode;
         }
-        return this;
+        return toInsert;
+    }
+
+    //public Node delete(int location) throws IllegalArgumentException {}
+
+    public int getIndex(Album album) {
+        int index = 1;
+        if(this.head==null){
+            index = -1;
+            System.out.println("Empty List");
+        } else {
+            Node tempNode = this.head;
+            while(tempNode != null){
+                if(tempNode.album.compareTo(album)==0) return index;
+                if(tempNode.next == null && tempNode.album.compareTo(album)!=0) {
+                    System.out.println("Album not found in list");
+                    return index = -1;
+                } else{
+                    tempNode = tempNode.next;
+                    index++;
+                }
+            }
+        }
+        return index;
     }
 
     @Override
@@ -51,7 +84,7 @@ public class DoublyLinkedList <T> {
             Node toPrint = head;
             sb.append("NULL <--> ");
             while (toPrint != null) {
-                sb = sb.append(toPrint.album);
+                sb = sb.append(toPrint.album.ID);
                 sb = sb.append(" <--> ");
                 toPrint = toPrint.next;
             }
