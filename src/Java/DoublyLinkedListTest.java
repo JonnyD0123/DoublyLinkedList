@@ -102,8 +102,15 @@ public class DoublyLinkedListTest {
         System.out.println(dll.toString());
         assertEquals("NULL <--> 3 <--> 4 <--> 1 <--> 2 <--> NULL", dll.toString());
 
-        //throws an exception because location 21 is out of bounds for current list
-        Album a5 = new Album(4, artistNames, "album 5", 12);
+        //throws an exception because locations 21 and 0 are both out  of bounds for current list
+        Album a5 = new Album(5, artistNames, "album 5", 12);
         dll.insert(21, a5);
+        Album a6 = new Album(6, artistNames, "album 6", 12);
+        dll.insert(-1, a6);
+    }
+
+    @Test
+    void testDelete() {
+
     }
 }

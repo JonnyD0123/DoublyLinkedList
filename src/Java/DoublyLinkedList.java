@@ -30,6 +30,11 @@ public class DoublyLinkedList <T extends Comparable<T>> {
                 toInsert.next = this.head;
                 this.head = toInsert;
             } else {
+                try {
+                    if(location < 0) throw new IllegalArgumentException("Location is out of bounds for current list");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Location is Out of Bounds");
+                }
                 int loc = 1;
                 Node tempNode = this.head;
                 while((loc < (location-1)) && (tempNode.next!=null)) {
@@ -52,7 +57,19 @@ public class DoublyLinkedList <T extends Comparable<T>> {
         return toInsert;
     }
 
-    //public Node delete(int location) throws IllegalArgumentException {}
+    public Node delete(int location) throws IllegalArgumentException {
+        try{
+            if(this.head==null) throw new IllegalArgumentException("Cannot delete a node from an empty list");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Empty List");
+        }
+
+        Node tempNode = this.head;
+        if(location==0) {
+            tempNode.album = null;
+        }
+        return tempNode;
+    }
 
     public int getIndex(Album album) {
         int index = 1;
