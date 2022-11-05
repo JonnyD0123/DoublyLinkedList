@@ -80,9 +80,9 @@ public class DoublyLinkedListTest {
         artistNames.add("Artist 1");
         artistNames.add("Artist 2");
 
-        //EMPTY LIST
+        //EMPTY LIST but location > 0
         Album a1 = new Album(1, artistNames, "album 1", 5);
-        dll.insert(0, a1);
+        dll.insert(1, a1);
         System.out.println(dll.toString());
         assertEquals("NULL <--> 1 <--> NULL", dll.toString());
 
@@ -98,11 +98,11 @@ public class DoublyLinkedListTest {
         assertEquals("NULL <--> 3 <--> 1 <--> 2 <--> NULL", dll.toString());
 
         Album a4 = new Album(4, artistNames, "album 4", 12);
-        dll.insert(1, a4);
+        dll.insert(3, a4);
         System.out.println(dll.toString());
-        assertEquals("NULL <--> 3 <--> 4 <--> 1 <--> 2 <--> NULL", dll.toString());
+        assertEquals("NULL <--> 3 <--> 1 <--> 2 <--> 4 <--> NULL", dll.toString());
 
-        //throws an exception because locations 21 and 0 are both out  of bounds for current list
+        //both attempts to insert throw exceptions because locations 21 and 0 are both out of bounds for current list
         Album a5 = new Album(5, artistNames, "album 5", 12);
         dll.insert(21, a5);
         Album a6 = new Album(6, artistNames, "album 6", 12);
@@ -111,6 +111,59 @@ public class DoublyLinkedListTest {
 
     @Test
     void testDelete() {
+        DoublyLinkedList<Album> dll = new DoublyLinkedList<>();
+        assertNull(dll.head);
+        assertNull(dll.tail);
 
+        //throws an exception because dll is empty, so you cannot delete a node from it
+        dll.delete(3);
+
+        ArrayList<String> artistNames = new ArrayList<>();
+        artistNames.add("Artist 1");
+        artistNames.add("Artist 2");
+
+        System.out.println(dll.toString());
+
+        Album a1 = new Album(1, artistNames, "album 1", 5);
+        dll.insert(0, a1);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 1 <--> NULL", dll.toString());
+
+        //Out of bounds exception
+        dll.delete(34);
+        System.out.println(dll.toString());
+
+        Album a2 = new Album(2, artistNames, "album 2", 5);
+        dll.insert(0, a2);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 2 <--> 1 <--> NULL", dll.toString());
+
+        Album a3 = new Album(3, artistNames, "album 3", 5);
+        dll.insert(0, a3);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 3 <--> 2 <--> 1 <--> NULL", dll.toString());
+
+        Album a4 = new Album(4, artistNames, "album 4", 5);
+        dll.insert(0, a4);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 4 <--> 3 <--> 2 <--> 1 <--> NULL", dll.toString());
+
+        dll.delete(0);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 3 <--> 2 <--> 1 <--> NULL", dll.toString());
+
+        dll.delete(0);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 2 <--> 1 <--> NULL", dll.toString());
+
+        dll.delete(0);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 1 <--> NULL", dll.toString());
+
+        dll.delete(0);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> NULL", dll.toString());
     }
+
+
 }

@@ -22,52 +22,82 @@ public class DoublyLinkedList <T extends Comparable<T>> {
     public Node insert(int location, Album album) throws IllegalArgumentException {
         Node toInsert = new Node<>(album);
         if(this.head == null){
+            try {
+                if(location != 0) throw new IllegalArgumentException("Inserting into an Empty List");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Empty List");
+            }
             this.head = toInsert;
             this.tail = toInsert;
-            if(location != 0) throw new IllegalArgumentException("Inserting into an Empty List");
         } else {
             if(location==0){
                 toInsert.next = this.head;
                 this.head = toInsert;
             } else {
-                try {
-                    if(location < 0) throw new IllegalArgumentException("Location is out of bounds for current list");
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Location is Out of Bounds");
+                if(location < 0) {
+                    try {
+                        throw new IllegalArgumentException("Location is out of bounds for current list");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Location Cannot Be Negative");
+                    }
                 }
                 int loc = 1;
                 Node tempNode = this.head;
-                while((loc < (location-1)) && (tempNode.next!=null)) {
+                while((loc < (location)) && (tempNode.next!=null)) {
                     tempNode = tempNode.next;
                     loc++;
                 }
                 if(tempNode.next == null){
-                    int length = this.getIndex(tempNode.album);
-                    try {
-                        if(location > length) throw new IllegalArgumentException("Location is out of bounds for current list");
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("Location is Out of Bounds");
+                    int length = this.getIndex(tempNode.album)+1;
+                    if(location > length+1) {
+                        try {
+                            throw new IllegalArgumentException("Location is out of bounds for current list");
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Location is Out of Bounds");
+                        }
                     }
+                    toInsert.next = tempNode.next;
+                    tempNode.next = toInsert;
                 }
-                toInsert.next = tempNode.next;
-                tempNode.next = toInsert;
-                toInsert.prev = tempNode;
             }
         }
         return toInsert;
     }
 
     public Node delete(int location) throws IllegalArgumentException {
-        try{
-            if(this.head==null) throw new IllegalArgumentException("Cannot delete a node from an empty list");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Empty List");
-        }
-
         Node tempNode = this.head;
-        if(location==0) {
-            tempNode.album = null;
-        }
+        if(tempNode==null) {
+            try{
+                throw new IllegalArgumentException("Cannot delete a node from an empty list");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Empty List");
+            }
+        } else if(location < 0) {
+            try {
+                throw new IllegalArgumentException("Location is out of bounds for current list");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Location is Out of Bounds");
+            }
+        } else if(location==0){this.head = this.head.next;
+            } else {
+                int loc = 1;
+                while((loc < (location)) && (tempNode.next!=null)) {
+                    tempNode = tempNode.next;
+                    loc++;
+                }
+                if(tempNode.next == null){
+                    int length = this.getIndex(tempNode.album);
+                    if(location > length){
+                        try {
+                            throw new IllegalArgumentException("Location is out of bounds for current list");
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Location is Out of Bounds");
+                        }
+                    }
+                } else {
+                    tempNode.next = tempNode.next.next;
+                }
+            }
         return tempNode;
     }
 
