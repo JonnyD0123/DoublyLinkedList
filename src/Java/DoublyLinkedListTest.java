@@ -165,5 +165,43 @@ public class DoublyLinkedListTest {
         assertEquals("NULL <--> NULL", dll.toString());
     }
 
+    @Test
+    void testShuffle() {
+        DoublyLinkedList<Album> dll = new DoublyLinkedList<>();
+        assertNull(dll.head);
+        assertNull(dll.tail);
 
+        ArrayList<String> artistNames = new ArrayList<>();
+        artistNames.add("Artist 1");
+        artistNames.add("Artist 2");
+
+        //Throws exception because list is empty
+        dll.shuffle();
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> NULL", dll.toString());
+
+        Album a1 = new Album(1, artistNames, "album 1", 5);
+        dll.insert(0, a1);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 1 <--> NULL", dll.toString());
+
+        Album a2 = new Album(2, artistNames, "album 2", 12);
+        dll.insert(1, a2);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 1 <--> 2 <--> NULL", dll.toString());
+
+        Album a3 = new Album(3, artistNames, "album 3", 12);
+        dll.insert(2, a3);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 1 <--> 2 <--> 3 <--> NULL", dll.toString());
+
+        Album a4 = new Album(4, artistNames, "album 4", 12);
+        dll.insert(3, a4);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 1 <--> 2 <--> 3 <--> 4 <--> NULL", dll.toString());
+
+        dll.shuffle();
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 2 <--> 1 <--> 4 <--> 3 <--> NULL", dll.toString());
+    }
 }

@@ -1,5 +1,10 @@
 package Java;
 
+import jdk.jfr.Percentage;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class DoublyLinkedList <T extends Comparable<T>> {
     Node head;
     Node tail;
@@ -96,9 +101,36 @@ public class DoublyLinkedList <T extends Comparable<T>> {
                     }
                 } else {
                     tempNode.next = tempNode.next.next;
+                    tempNode.next.next.prev = tempNode;
                 }
             }
         return tempNode;
+    }
+
+    public Node shuffle() {
+        Node tempNode = this.head;
+        if (tempNode == null) {
+            try {
+                throw new IllegalArgumentException("Cannot shuffle nodes from an empty list");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Empty List");
+            }
+        } else {
+           ArrayList<Album> arr = new ArrayList<>();
+           while(tempNode!=null){
+               arr.add(tempNode.album);
+               tempNode = tempNode.next;
+           }
+            for(int i=0; i<arr.size(); i=i+2){
+                Collections.swap(arr, i, i+1);
+            }
+            tempNode = this.head;
+            for(int i=0; i<arr.size(); i++){
+                tempNode.album = arr.get(i);
+                tempNode = tempNode.next;
+            }
+        }
+        return this.head;
     }
 
     public int getIndex(Album album) {
