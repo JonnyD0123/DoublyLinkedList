@@ -136,10 +136,13 @@ public class DoublyLinkedList <T extends Comparable<T>> {
 
     public int getIndex(Album album) {
         int index = 1;
-        if(this.head==null){
-            index = -1;
-            System.out.println("Empty List");
-        } else {
+        if(this.head==null) {
+            try {
+                throw new IllegalArgumentException("Cannot delete a node from an empty list");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Empty List");
+            }
+        }else {
             Node tempNode = this.head;
             while(tempNode != null){
                 if(tempNode.album.compareTo(album)==0) return index;
@@ -155,8 +158,17 @@ public class DoublyLinkedList <T extends Comparable<T>> {
         return index;
     }
 
+    public DoublyLinkedList partition(Album album) {
+        DoublyLinkedList partitioned = new DoublyLinkedList();
+        Node tempNode = this.head;
+
+    }
+
     @Override
     public String toString() {
+        //The doubly linked list has pointers to previous and next
+        //therefore, I added a NULL pointer at the beginning as well as end of the list
+        //to help with my thinking
         StringBuilder sb = new StringBuilder();
         if (head == null) {
             sb.append("NULL <--> ");
