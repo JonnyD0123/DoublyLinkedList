@@ -200,8 +200,13 @@ public class DoublyLinkedListTest {
         System.out.println(dll.toString());
         assertEquals("NULL <--> 1 <--> 2 <--> 3 <--> 4 <--> NULL", dll.toString());
 
+        Album a5 = new Album(5, artistNames, "album 5", 12);
+        dll.insert(4, a5);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 1 <--> 2 <--> 3 <--> 4 <--> 5 <--> NULL", dll.toString());
+
         dll.shuffle();
         System.out.println(dll.toString());
-        assertEquals("NULL <--> 2 <--> 1 <--> 4 <--> 3 <--> NULL", dll.toString());
+        assertEquals("NULL <--> 2 <--> 1 <--> 4 <--> 3 <--> 5 <--> NULL", dll.toString());
     }
 }

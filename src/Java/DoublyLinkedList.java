@@ -81,10 +81,10 @@ public class DoublyLinkedList <T extends Comparable<T>> {
             try {
                 throw new IllegalArgumentException("Location is out of bounds for current list");
             } catch (IllegalArgumentException e) {
-                System.out.println("Location is Out of Bounds");
+                System.out.println("Location Cannot Be Negative");
             }
-        } else if(location==0){this.head = this.head.next;
-            } else {
+        } else if(location==0){this.head = this.head.next;}
+                else {
                 int loc = 1;
                 while((loc < (location)) && (tempNode.next!=null)) {
                     tempNode = tempNode.next;
@@ -121,7 +121,8 @@ public class DoublyLinkedList <T extends Comparable<T>> {
                arr.add(tempNode.album);
                tempNode = tempNode.next;
            }
-            for(int i=0; i<arr.size(); i=i+2){
+           int tmp = arr.size() - (arr.size()%2);
+            for(int i=0; i < tmp; i=i+2){
                 Collections.swap(arr, i, i+1);
             }
             tempNode = this.head;
