@@ -219,8 +219,8 @@ public class DoublyLinkedListTest {
         artistNames.add("Artist 1");
         artistNames.add("Artist 2");
 
-        Album test = new Album(0, artistNames, "album test", 8);
         //Throws exception - cannot partition empty list
+        Album test = new Album(0, artistNames, "album test", 8);
         dll.partition(test);
 
         Album a1 = new Album(1, artistNames, "album 1", 5);
