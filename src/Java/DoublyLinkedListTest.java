@@ -208,4 +208,37 @@ public class DoublyLinkedListTest {
         System.out.println(dll.toString());
         assertEquals("NULL <--> 2 <--> 1 <--> 4 <--> 3 <--> 5 <--> NULL", dll.toString());
     }
+
+    @Test
+    void testPartition() {
+        DoublyLinkedList<Album> dll = new DoublyLinkedList<>();
+        assertNull(dll.head);
+        assertNull(dll.tail);
+
+        ArrayList<String> artistNames = new ArrayList<>();
+        artistNames.add("Artist 1");
+        artistNames.add("Artist 2");
+
+        Album test = new Album(0, artistNames, "album test", 8);
+        //Throws exception - cannot partition empty list
+        dll.partition(test);
+
+        Album a1 = new Album(1, artistNames, "album 1", 5);
+        dll.insert(0, a1);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 1 <--> NULL", dll.toString());
+
+        Album a2 = new Album(2, artistNames, "album 2", 8);
+        dll.insert(1, a2);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 1 <--> 2 <--> NULL", dll.toString());
+
+        Album a3 = new Album(3, artistNames, "album 3", 16);
+        dll.insert(2, a3);
+        System.out.println(dll.toString());
+        assertEquals("NULL <--> 1 <--> 2 <--> 3 <--> NULL", dll.toString());
+
+        Album a4 = new Album(4, artistNames, "album 4", 8);
+        assertEquals("NULL <--> 2 <--> 3 <--> NULL", dll.partition(a4).toString());
+    }
 }
