@@ -161,7 +161,21 @@ public class DoublyLinkedList <T extends Comparable<T>> {
     public DoublyLinkedList partition(Album album) {
         DoublyLinkedList partitioned = new DoublyLinkedList();
         Node tempNode = this.head;
-
+        if(tempNode==null) {
+            try {
+                throw new IllegalArgumentException("Cannot delete a node from an empty list");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Empty List");
+            }
+        } else {
+            while(tempNode!=null){
+                if(tempNode.album.numSongs.compareTo(album.numSongs)>=0) {
+                    partitioned.append(tempNode.album);
+                }
+                tempNode = tempNode.next;
+            }
+        }
+        return partitioned;
     }
 
     @Override
